@@ -13,5 +13,5 @@ public class AddTaskRequest {
     private String title;
     private String description;
     private TaskPriority taskPriority;
-    private String taskWeight;
+    private Short taskWeight;
 }

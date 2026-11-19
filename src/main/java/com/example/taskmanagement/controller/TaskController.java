@@ -5,6 +5,7 @@ import com.example.taskmanagement.dto.AllTaskResponse;
 import com.example.taskmanagement.dto.TaskResponse;
 import com.example.taskmanagement.dto.UpdateTaskRequest;
 import com.example.taskmanagement.service.TaskService;
+import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -29,7 +30,7 @@ public class TaskController {
     }
 
     @PostMapping
-    public void saveTask(@RequestBody AddTaskRequest request){
+    public void saveTask(@RequestBody @Valid AddTaskRequest request){
          service.saveTask(request);
     }
 
@@ -39,7 +40,7 @@ public class TaskController {
     }
 
     @PutMapping("{id}")
-    public void updateTask(@PathVariable Integer id, @RequestBody UpdateTaskRequest request){
+    public void updateTask(@PathVariable Integer id, @RequestBody @Valid UpdateTaskRequest request){
         service.updateTask(id,request);
     }
 

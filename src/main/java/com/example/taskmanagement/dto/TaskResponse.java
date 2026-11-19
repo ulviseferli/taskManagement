@@ -16,7 +16,7 @@ public class TaskResponse {
     private String description;
     private TaskStatus taskStatus = TaskStatus.TODO;
     private TaskPriority taskPriority;
-    private String taskWeight;
+    private Short taskWeight;
     private Boolean status = true;
     private LocalDateTime createdAt = LocalDateTime.now();
 

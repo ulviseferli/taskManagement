@@ -14,5 +14,5 @@ public class UpdateTaskRequest {
   private String description;
   private TaskStatus taskStatus = TaskStatus.TODO;
   private TaskPriority taskPriority;
-  private String taskWeight;
+  private Short taskWeight;
 }
