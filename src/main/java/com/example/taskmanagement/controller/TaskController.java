@@ -1,9 +1,6 @@
 package com.example.taskmanagement.controller;
 
-import com.example.taskmanagement.dto.AddTaskRequest;
-import com.example.taskmanagement.dto.AllTaskResponse;
-import com.example.taskmanagement.dto.TaskResponse;
-import com.example.taskmanagement.dto.UpdateTaskRequest;
+import com.example.taskmanagement.dto.*;
 import com.example.taskmanagement.service.TaskService;
 import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.*;
@@ -20,8 +17,11 @@ public class TaskController {
     }
 
     @GetMapping
-    public List<AllTaskResponse> getAll(){
-        return service.getAll();
+    public PageResponse<AllTaskResponse> getAll(
+           @RequestParam(defaultValue = "0") Integer pageNumber,
+           @RequestParam(defaultValue = "10") Integer pageSize
+    ){
+        return service.getAll(pageNumber,pageSize);
     }
 
     @GetMapping("{id}")

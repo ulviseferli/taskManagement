@@ -1,17 +1,16 @@
 package com.example.taskmanagement.dto;
 
 import com.example.taskmanagement.entities.enums.TaskStatus;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
+import lombok.experimental.FieldDefaults;
 
 @Data
 @Getter
 @Setter
 @AllArgsConstructor
+@FieldDefaults(level = AccessLevel.PRIVATE)
 public class AllTaskResponse {
-    private Integer id;
-    private String Title;
-    private TaskStatus taskStatus;
+     Integer id;
+     String Title;
+     TaskStatus taskStatus;
 }

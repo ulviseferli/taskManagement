@@ -7,40 +7,38 @@ import lombok.*;
 import lombok.experimental.FieldDefaults;
 
 import java.time.LocalDateTime;
-@Getter
-@Setter
 @Entity
-@NoArgsConstructor
 @AllArgsConstructor
+@NoArgsConstructor
 @Data
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class TaskEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    Integer id;
 
     @Column(name="title", length = 40, nullable = false, unique = true)
-    private String title;
+    String title;
 
     @Column(name="description", columnDefinition = "TEXT", length = 2000)
-    private String description;
+    String description;
 
     @Column(name="task_status", nullable = false, length = 20)
     @Enumerated(EnumType.STRING)
-    private TaskStatus taskStatus;
+    TaskStatus taskStatus;
 
     @Column(name="task_prioroty", nullable = false, length = 20)
     @Enumerated(EnumType.STRING)
-    private TaskPriority taskPriorty;
+    TaskPriority taskPriorty;
 
     @Column(name="task_weight")
-    private Short taskWeigth;
+    Short taskWeigth;
 
     @Column(name="status",nullable = false)
-    private Boolean status;
+    Boolean status;
 
     @Column(name="created_name",nullable = false,updatable = false)
-    private LocalDateTime createdAt;
+    LocalDateTime createdAt;
 
     @PrePersist
     public void onCreate(){

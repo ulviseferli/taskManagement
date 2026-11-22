@@ -1,4 +1,4 @@
-package com.example.taskmanagement.converter;
+package com.example.taskmanagement.mapper;
 
 import com.example.taskmanagement.dto.AddTaskRequest;
 import com.example.taskmanagement.dto.AllTaskResponse;
@@ -11,8 +11,8 @@ import com.example.taskmanagement.dto.TaskResponse;
 import java.time.LocalDateTime;
 
 @Component
-public class TaskConverter {
-    public TaskResponse toTaskResponseFromEntity(TaskEntity taskEntity){
+public class TaskMapper {
+    public TaskResponse toTaskResponseFromEntity(TaskEntity taskEntity) {
         return new TaskResponse(
                 taskEntity.getId(),
                 taskEntity.getTitle(),
@@ -20,12 +20,11 @@ public class TaskConverter {
                 taskEntity.getTaskStatus(),
                 taskEntity.getTaskPriorty(),
                 taskEntity.getTaskWeigth(),
-                taskEntity.getStatus(),
                 taskEntity.getCreatedAt()
         );
     }
 
-    public AllTaskResponse toAllTaskResponseFromEntity(TaskEntity taskEntity){
+    public AllTaskResponse toAllTasksResponseFromEntity(TaskEntity taskEntity) {
         return new AllTaskResponse(
                 taskEntity.getId(),
                 taskEntity.getTitle(),
@@ -33,24 +32,16 @@ public class TaskConverter {
         );
     }
 
-    public TaskEntity toEntityFromAddTaskRequest(AddTaskRequest requestDto){
+    public TaskEntity toEntityFromAddTaskRequest(AddTaskRequest requestDto) {
         TaskEntity entity = new TaskEntity();
-        entity.setTitle(requestDto.getTitle());
-        entity.setDescription(requestDto.getDescription());
+        Short taskWeight = requestDto.getTaskWeight() == null ? 0 : requestDto.getTaskWeight();
+
+        entity.setTitle(requestDto.getTitle().trim());
+        entity.setDescription(requestDto.getDescription().trim());
         entity.setTaskStatus(TaskStatus.TODO);
         entity.setTaskPriorty(requestDto.getTaskPriority());
+        entity.setTaskWeigth(taskWeight);
         entity.setStatus(true);
-        entity.setCreatedAt(LocalDateTime.now());
-
-        return entity;
-    }
-
-    public TaskEntity toEntityFromUpdateTaskRequest(TaskEntity entity, UpdateTaskRequest requestDto) {
-        entity.setTitle(requestDto.getTitle());
-        entity.setDescription(requestDto.getDescription());
-        entity.setTaskStatus(requestDto.getTaskStatus());
-        entity.setTaskPriorty(requestDto.getTaskPriority());
-        entity.setTaskWeigth(requestDto.getTaskWeight());
 
         return entity;
     }
