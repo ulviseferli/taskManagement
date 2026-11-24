@@ -37,8 +37,11 @@ public class TaskEntity {
     @Column(name="status",nullable = false)
     Boolean status;
 
-    @Column(name="created_name",nullable = false,updatable = false)
+    @Column(name="created_at",nullable = false,updatable = false)
     LocalDateTime createdAt;
+
+    @Column(name="updated_at",nullable = false)
+    LocalDateTime updatedAt;
 
     @PrePersist
     public void onCreate(){
