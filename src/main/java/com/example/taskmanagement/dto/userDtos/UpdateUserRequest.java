@@ -2,7 +2,15 @@ package com.example.taskmanagement.dto.userDtos;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotNull;
+import lombok.*;
+import lombok.experimental.FieldDefaults;
 
+@Getter
+@Setter
+@EqualsAndHashCode
+@AllArgsConstructor
+@NoArgsConstructor
+@FieldDefaults(level = AccessLevel.PRIVATE)
 public class UpdateUserRequest {
     @NotNull(message = "username can not be null")
     String username;
@@ -11,12 +19,11 @@ public class UpdateUserRequest {
     @Email(message = "email can not be format")
     String email;
 
-    @NotNull(message = "password can not be null")
-    String password;
-
-    @NotNull(message = "firstName can not be null")
+    @NotNull(message = "Lirstname can not be null")
     String firstName;
 
-    @NotNull(message = "lastName can not be null")
+    @NotNull(message = "Lastname can not be null")
     String lastName;
+
+
 }

@@ -28,9 +28,4 @@ public class AddUserRequest {
     @NotNull(message = "password can not be null")
     String password;
 
-    @NotNull(message = "firstName can not be null")
-    String firstName;
-
-    @NotNull(message = "lastName can not be null")
-    String lastName;
 }

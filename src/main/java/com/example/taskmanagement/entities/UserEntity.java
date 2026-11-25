@@ -5,6 +5,8 @@ import lombok.*;
 import lombok.experimental.FieldDefaults;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "users")
@@ -27,10 +29,10 @@ public class UserEntity {
     @Column(name = "password",nullable = false, length = 150)
     String password;
 
-    @Column(name = "firstName", nullable = false, length = 50)
+    @Column(name = "firstName", length = 50)
     String firstName;
 
-    @Column(name = "lastName", nullable = false, length = 50)
+    @Column(name = "lastName",  length = 50)
     String lastName;
 
     @Column(name = "status", nullable = false)
@@ -41,6 +43,9 @@ public class UserEntity {
 
     @Column(name = "updated_at", nullable = false)
     LocalDateTime updatedAt;
+
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
+    List<TaskEntity> tasks = new ArrayList<>();
 
     @PrePersist
     public void onCreate(){

@@ -43,6 +43,11 @@ public class TaskEntity {
     @Column(name="updated_at",nullable = false)
     LocalDateTime updatedAt;
 
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "user_id", nullable = false)
+    UserEntity user;
+
+
     @PrePersist
     public void onCreate(){
         if(taskStatus == null){

@@ -29,12 +29,36 @@ public class GlobalExceptionHandling {
         return response;
     }
 
+    @ExceptionHandler(UserNotFoundException.class)
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    public Map<String,Object> handleUserNotFoundException(UserNotFoundException ex, HttpServletRequest request){
+        Map<String, Object> response = new LinkedHashMap<>();
+        response.put("path",request.getRequestURI());
+        response.put("message",ex.getMessage());
+        response.put("status",400);
+        response.put("timestamp",LocalDateTime.now());
+
+        return response;
+    }
+
     @ExceptionHandler(TaskAlreadyExistsException.class)
     @ResponseStatus(HttpStatus.CONFLICT)
     public Map<String, Object> handleTaskAlreadyExistsException(
             TaskAlreadyExistsException ex,
             HttpServletRequest request
     ) {
+        Map<String, Object> response = new LinkedHashMap<>();
+        response.put("path", request.getRequestURI());
+        response.put("message", ex.getMessage());
+        response.put("status", 409);
+        response.put("timestamp", LocalDateTime.now());
+
+        return response;
+    }
+
+    @ExceptionHandler(UserAlreadyExistsException.class)
+    @ResponseStatus(HttpStatus.CONFLICT)
+    public Map<String, Object> handleUserAlreadyExistsException(UserAlreadyExistsException ex, HttpServletRequest request){
         Map<String, Object> response = new LinkedHashMap<>();
         response.put("path", request.getRequestURI());
         response.put("message", ex.getMessage());
@@ -59,6 +83,21 @@ public class GlobalExceptionHandling {
         return response;
     }
 
+    @ExceptionHandler(UserAlreadyDeletedException.class)
+    @ResponseStatus(HttpStatus.CONFLICT)
+    public Map<String, Object> handleUserAlreadyDeletedException(
+            UserAlreadyDeletedException ex,
+            HttpServletRequest request
+    ) {
+        Map<String, Object> response = new LinkedHashMap<>();
+        response.put("path", request.getRequestURI());
+        response.put("message", ex.getMessage());
+        response.put("status", 409);
+        response.put("timestamp", LocalDateTime.now());
+
+        return response;
+    }
+
     @ExceptionHandler(InvalidTaskModificationException.class)
     @ResponseStatus(HttpStatus.UNPROCESSABLE_CONTENT)
     public Map<String, Object> handleInvalidTaskModificationException(
@@ -69,6 +108,51 @@ public class GlobalExceptionHandling {
         response.put("path", request.getRequestURI());
         response.put("message", ex.getMessage());
         response.put("status", 422);
+        response.put("timestamp", LocalDateTime.now());
+
+        return response;
+    }
+
+    @ExceptionHandler(InvalidUserModificationException.class)
+    @ResponseStatus(HttpStatus.UNPROCESSABLE_CONTENT)
+    public Map<String, Object> handleInvalidUserModificationException(
+            InvalidUserModificationException ex,
+            HttpServletRequest request
+    ) {
+        Map<String, Object> response = new LinkedHashMap<>();
+        response.put("path", request.getRequestURI());
+        response.put("message", ex.getMessage());
+        response.put("status", 422);
+        response.put("timestamp", LocalDateTime.now());
+
+        return response;
+    }
+
+    @ExceptionHandler(PasswordMismatchException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public Map<String, Object> handlePasswordMismathException(
+            PasswordMismatchException ex,
+            HttpServletRequest request
+    ) {
+        Map<String, Object> response = new LinkedHashMap<>();
+        response.put("path", request.getRequestURI());
+        response.put("message", ex.getMessage());
+        response.put("status", 400);
+        response.put("timestamp", LocalDateTime.now());
+
+        return response;
+    }
+
+    @ExceptionHandler(UserAlreadyActiveException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public Map<String, Object> handleUserAlreadyActiveException(
+            UserAlreadyActiveException ex,
+            HttpServletRequest request
+    ) {
+        Map<String, Object> response = new LinkedHashMap<>();
+        response.put("path", request.getRequestURI());
+        response.put("message", ex.getMessage());
+        response.put("status", 400);
         response.put("timestamp", LocalDateTime.now());
 
         return response;

@@ -82,7 +82,7 @@ public class TaskService {
         log.debug("Task deleting, id{}",id);
 
         TaskEntity taskEntity = getEntityByID(id);
-        if(taskEntity.getStatus().equals(true)){
+        if(taskEntity.getStatus().equals(false)){
             log.warn("Task already deleted, id{}",id);
             throw new TaskAlreadyDeletedException("Task already deleted");
         }
