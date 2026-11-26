@@ -53,15 +53,19 @@ public class UserService {
     }
 
     public void saveUser(AddUserRequest request){
+        log.debug("User saving, title={}",request.getUsername());
         if(repository.existsByUsernameIgnoreCase(request.getUsername())){
+            log.warn("Username already exists, title={}",request.getUsername());
             throw new UserAlreadyExistsException("User already exists");
         }
 
-        repository.save(converter.toEntityFromAddUserRequest(request));
+        UserEntity entity =  repository.save(converter.toEntityFromAddUserRequest(request));
+        log.info("user created, id={}",entity.getId());
     }
 
     private UserEntity getEntityById(Integer id){
         return repository.findByIdAndStatusTrue(id).orElseThrow(() -> {
+            log.warn("User not found id={}",id);
              return new UserNotFoundException("User not found");
         });
     }
@@ -73,24 +77,30 @@ public class UserService {
     }
 
     public void deleteById(Integer id){
+        log.debug("user deleting, id={}",id);
         UserEntity entity = getEntityById(id);
 
         if(entity.getStatus().equals(false)){
+            log.warn("user already deleted, id{}",id);
             throw new UserAlreadyDeletedException("User already deleted");
         }
 
         entity.setStatus(false);
         repository.save(entity);
+        log.info("user deleted, id={}",id);
     }
 
     public void updateUser(Integer id, UpdateUserRequest request){
+        log.debug("user updating, id={}",id);
         UserEntity entity = getEntityById(id);
 
         if(repository.existsByUsernameIgnoreCaseAndIdNot(request.getUsername(),id)){
+            log.warn("user already exists, id={}",id);
             throw new UserAlreadyExistsException("User already exists");
         }
 
         if(entity.getStatus().equals(false)){
+            log.warn("invalid user modification, id={}",id);
             throw new InvalidUserModificationException("Invalid user modification");
         }
 
@@ -100,37 +110,46 @@ public class UserService {
         entity.setLastName(request.getLastName());
 
         repository.save(entity);
+        log.info("user updated, id={}",id);
     }
 
     public void changePassword(Integer id, ChangePasswordRequest request){
+        log.debug("user password change, id={}",id);
         UserEntity entity = getEntityById(id);
 
         if(!entity.getPassword().equals(request.getOldPassword())){
+            log.warn("password mismatch, id={}",id);
             throw new PasswordMismatchException("Password mismatch");
         }
 
         if(entity.getPassword().equals(request.getNewPassword())){
+            log.warn("New password must be different old password, id={}",id);
             throw  new InvalidUserModificationException("New password must be different old password");
         }
 
         entity.setPassword(request.getNewPassword());
         repository.save(entity);
 
+        log.info("user password change, id={}",id);
     }
 
     public void activateUser(Integer id){
         UserEntity entity = getEntityById(id);
 
         if(entity.equals(null)){
+            log.warn("user not found");
             throw  new UserNotFoundException("User not found");
         }
 
         if(entity.getStatus().equals(Boolean.TRUE)){
+            log.warn("user already exists, id={}",id);
             throw new UserAlreadyActiveException("User already active");
         }
 
         entity.setStatus(true);
         repository.save(entity);
+
+        log.info("user activate, id={}",id);
     }
 
 
